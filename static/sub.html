@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="dark" dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Subscription</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+    
+    <style>
+        /* ================================================================
+           DARK GLASS GOLD — کاملاً مشکی با طلایی شیشه‌ای
+           ================================================================ */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #e8e8e8;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── پس‌زمینه مشکی ── */
+        .bg-dark {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            background: 
+                radial-gradient(ellipse 600px 500px at 30% 25%, rgba(212, 175, 55, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 400px 400px at 70% 75%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                #050505;
+        }
+
+        /* ── شبکه طلایی ── */
+        .gold-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 70%);
+            animation: gridFloat 35s linear infinite;
+        }
+        @keyframes gridFloat {
+            from { background-position: 0 0; }
+            to   { background-position: 50px 50px; }
+        }
+
+        /* ── اورب‌های طلایی شیشه‌ای ── */
+        .glass-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+            animation: orbFloat 25s ease-in-out infinite alternate;
+        }
+        .glass-orb-1 {
+            width: 450px; height: 450px;
+            top: -120px; left: -80px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.10), transparent 60%);
+            animation-delay: 0s;
+        }
+        .glass-orb-2 {
+            width: 350px; height: 350px;
+            bottom: -100px; right: -60px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 60%);
+            animation-delay: -6s;
+        }
+        .glass-orb-3 {
+            width: 250px; height: 250px;
+            top: 40%; left: 55%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent 60%);
+            animation-delay: -12s;
+        }
+        @keyframes orbFloat {
+            from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.5; }
+            50% { transform: translate3d(40px, -30px, 0) scale(1.1); opacity: 0.7; }
+            to { transform: translate3d(-30px, 30px, 0) scale(0.9); opacity: 0.5; }
+        }
+
+        /* ── پنل شیشه‌ای اصلی ── */
+        .glass-panel {
+            background: rgba(8, 8, 10, 0.60);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(212, 175, 55, 0.05);
+            box-shadow: 
+                0 8px 40px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(212, 175, 55, 0.03);
+            transition: all 0.4s cubic-bezier(.22,1,.36,1);
+        }
+        .glass-panel:hover {
+            border-color: rgba(212, 175, 55, 0.10);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.02);
+        }
+
+        /* ── متن طلایی ── */
+        .text-gold { color: #d4af37; }
+        .text-gold-dim { color: rgba(212, 175, 55, 0.35); }
+        .text-gold-bright { color: #f0d080; }
+
+        /* ── دکمه شیشه‌ای ── */
+        .btn-glass {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.04);
+            background: rgba(8, 8, 10, 0.3);
+            backdrop-filter: blur(8px);
+            color: rgba(212, 175, 55, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-glass:hover {
+            border-color: rgba(212, 175, 55, 0.15);
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.04);
+            transform: scale(1.05);
+        }
+
+        /* ── حلقه پیشرفت ── */
+        .ring-progress {
+            transform: rotate(-90deg);
+        }
+        .ring-progress__circle {
+            transition: stroke-dashoffset 0.8s cubic-bezier(.22,1,.36,1);
+        }
+        .ring-progress__bg {
+            stroke: rgba(212, 175, 55, 0.03);
+        }
+
+        /* ── نقطه طلایی ── */
+        .gold-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4af37;
+            display: inline-block;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ── کارت متریک ── */
+        .metric-card {
+            background: rgba(8, 8, 10, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.02);
+            border-radius: 10px;
+            padding: 12px 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .metric-card:hover {
+            border-color: rgba(212, 175, 55, 0.05);
+            background: rgba(8, 8, 10, 0.3);
+        }
+
+        /* ── نوار پیشرفت ── */
+        .progress-bar {
+            height: 2px;
+            border-radius: 2px;
+            background: rgba(212, 175, 55, 0.03);
+            overflow: hidden;
+        }
+        .progress-bar__fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #d4af37, #f0d080);
+            transition: width 0.8s cubic-bezier(.22,1,.36,1);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.06);
+        }
+
+        /* ── انیمیشن ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
+        .fade-up-1 { animation-delay: 0.04s; }
+        .fade-up-2 { animation-delay: 0.08s; }
+        .fade-up-3 { animation-delay: 0.12s; }
+        .fade-up-4 { animation-delay: 0.16s; }
+        .fade-up-5 { animation-delay: 0.20s; }
+
+        /* ── اسکرول ── */
+        .scroll-glass::-webkit-scrollbar { width: 3px; }
+        .scroll-glass::-webkit-scrollbar-track { background: rgba(212, 175, 55, 0.01); }
+        .scroll-glass::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.06); border-radius: 4px; }
+        .scroll-glass::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.10); }
+
+        /* ── مدال ── */
+        #qrModal { 
+            transition: opacity 0.3s ease; 
+            opacity: 0; 
+            pointer-events: none; 
+        }
+        #qrModal.show { 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+        #toast { 
+            transition: opacity 0.3s ease; 
+            opacity: 0; 
+            pointer-events: none; 
+        }
+        #toast.show { 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        /* ── دکمه Import ── */
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37, #b8961e);
+            color: #050505;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .btn-gold:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.10);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====== BACKGROUND ====== -->
+<div class="bg-dark"></div>
+<div class="gold-grid"></div>
+<div class="glass-orb glass-orb-1"></div>
+<div class="glass-orb glass-orb-2"></div>
+<div class="glass-orb glass-orb-3"></div>
+
+<!-- ====== MAIN ====== -->
+<main class="relative z-10 w-full max-w-3xl mx-auto px-4 py-5 min-h-screen flex flex-col">
+
+    <!-- ====== HEADER — فقط آیکون‌ها ====== -->
+    <header class="flex justify-end items-center gap-2 mb-5 fade-up fade-up-1">
+        <button onclick="toggleTheme()" class="btn-glass" title="Toggle Theme">
+            <span class="material-symbols-outlined text-xl">dark_mode</span>
+        </button>
+    </header>
+
+    <!-- ====== CONTENT ====== -->
+    <div id="app" class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <!-- Loading -->
+        <div class="md:col-span-2 flex items-center justify-center py-16">
+            <div class="text-center">
+                <div class="inline-block w-7 h-7 border-2 border-gold/15 border-t-gold rounded-full animate-spin"></div>
+                <p class="mt-3 text-[10px] text-gold-dim/30 tracking-[0.15em] uppercase">Loading</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- ====== QR MODAL ====== -->
+<div id="qrModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="glass-panel rounded-2xl p-6 max-w-xs w-full mx-4 text-center relative">
+        <button onclick="closeQr()" class="absolute top-2 right-2 text-gold-dim hover:text-gold transition-colors">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <h3 class="text-sm font-bold text-gold tracking-[0.15em] uppercase mb-4">✦ QR Code ✦</h3>
+        <img id="qrImg" class="mx-auto rounded-lg border border-gold/5 bg-black/20" alt="QR" style="max-width: 170px;"/>
+        <p class="mt-3 text-[9px] text-gold-dim/30 tracking-[0.2em] uppercase">Scan to import</p>
+    </div>
+</div>
+
+<!-- ====== TOAST ====== -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-[#d4af37] text-[#050505] text-xs font-bold z-50 tracking-[0.1em]">
+    ✦ Copied ✦
+</div>
+
+<script>
+(function() {
+    // ── TOGGLE THEME ──
+    window.toggleTheme = function() {
+        document.documentElement.classList.toggle('dark');
+        var icon = document.querySelector('[onclick="toggleTheme()"] .material-symbols-outlined');
+        if (icon) {
+            icon.textContent = document.documentElement.classList.contains('dark') ? 'dark_mode' : 'light_mode';
+        }
+    };
+
+    window.closeQr = function() {
+        document.getElementById('qrModal').classList.remove('show');
+    };
+
+    // ── TOAST ──
+    function toast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = '✦ ' + msg + ' ✦';
+        t.classList.add('show');
+        clearTimeout(t._timer);
+        t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+    }
+
+    // ── COPY ──
+    window.copyText = function(text) {
+        if (!text) return;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() { toast('Copied'); });
+        } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); toast('Copied'); } catch(e) {}
+            document.body.removeChild(ta);
+        }
+    };
+
+    // ── FORMAT ──
+    function fmtBytes(b) {
+        if (!b || b < 1) return '0 B';
+        var u = ['B', 'KB', 'MB', 'GB', 'TB'];
+        var i = 0;
+        while (b >= 1024 && i < u.length - 1) { b /= 1024; i++; }
+        return b.toFixed(i ? 1 : 0) + ' ' + u[i];
+    }
+
+    // ── RING ──
+    function createRing(value, max, label) {
+        var r = 28, c = 2 * Math.PI * r;
+        var pct = max > 0 ? Math.min(1, value / max) : 1;
+        var offset = c * (1 - pct);
+        var display = value === '∞' ? '∞' : String(value);
+        if (typeof value === 'number' && value > 999) display = (value/1000).toFixed(1) + 'K';
+        
+        return '<div class="flex flex-col items-center">' +
+            '<div class="relative w-14 h-14">' +
+                '<svg class="w-full h-full ring-progress" viewBox="0 0 64 64">' +
+                    '<circle cx="32" cy="32" fill="transparent" r="28" class="ring-progress__bg" stroke-width="3"></circle>' +
+                    '<circle class="ring-progress__circle" cx="32" cy="32" fill="transparent" r="28" stroke="#d4af37" stroke-width="3" stroke-dasharray="' + c.toFixed(2) + '" stroke-dashoffset="' + offset.toFixed(2) + '" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(212,175,55,0.10));"></circle>' +
+                '</svg>' +
+                '<div class="absolute inset-0 flex items-center justify-center">' +
+                    '<span class="text-sm font-bold text-gold">' + display + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<span class="text-[8px] text-gold-dim/25 tracking-[0.15em] uppercase mt-1">' + label + '</span>' +
+        '</div>';
+    }
+
+    // ── PROGRESS BAR ──
+    function createProgress(value, max, label) {
+        var pct = max > 0 ? Math.min(100, value / max * 100) : 0;
+        return '<div class="w-full">' +
+            '<div class="flex justify-between items-end mb-1">' +
+                '<span class="text-[9px] text-gold-dim/30 tracking-[0.1em] uppercase">' + label + '</span>' +
+                '<span class="text-[10px] font-bold text-gold">' + fmtBytes(value) + ' / ' + (max > 0 ? fmtBytes(max) : '∞') + '</span>' +
+            '</div>' +
+            '<div class="progress-bar">' +
+                '<div class="progress-bar__fill" style="width:' + pct.toFixed(1) + '%;"></div>' +
+            '</div>' +
+        '</div>';
+    }
+
+    // ── RENDER ──
+    function render(d) {
+        var used = d.traffic_used_bytes || 0;
+        var limit = d.traffic_limit_bytes || 0;
+        var days = (d.expire_days === null || d.expire_days === undefined) ? '∞' : d.expire_days;
+        var isActive = d.is_active !== false && d.status === 'active';
+
+        var html = 
+            // Row 1: Time + Traffic
+            '<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 fade-up fade-up-2">' +
+                // Time Card
+                '<div class="glass-panel rounded-xl p-5 flex items-center justify-between">' +
+                    '<div>' +
+                        '<span class="text-[9px] text-gold-dim/30 tracking-[0.15em] uppercase">Time Left</span>' +
+                        '<div class="flex items-center gap-2 mt-1">' +
+                            '<span class="text-2xl font-bold text-gold">' + days + '</span>' +
+                            '<span class="text-[10px] text-gold-dim/25">days</span>' +
+                            '<span class="gold-dot ml-1"></span>' +
+                        '</div>' +
+                        '<span class="text-[9px] text-gold-dim/25 tracking-[0.1em]">' + (isActive ? '● Active' : '○ Inactive') + '</span>' +
+                    '</div>' +
+                    '<div>' + createRing(days === '∞' ? 30 : days, 30, 'Remaining') + '</div>' +
+                '</div>' +
+                // Traffic Card
+                '<div class="glass-panel rounded-xl p-5 flex flex-col justify-center">' +
+                    '<div class="flex items-center justify-between">' +
+                        '<span class="text-[9px] text-gold-dim/30 tracking-[0.15em] uppercase">Traffic</span>' +
+                        '<span class="text-[10px] font-bold text-gold">' + (limit > 0 ? (used/limit*100).toFixed(1) : '∞') + '%</span>' +
+                    '</div>' +
+                    '<div class="mt-2">' + createProgress(used, limit, 'Used') + '</div>' +
+                '</div>' +
+            '</div>' +
+            // Row 2: Devices only (protocol removed)
+            '<div class="md:col-span-2 grid grid-cols-1 gap-4 fade-up fade-up-3">' +
+                // Devices Card (full width)
+                '<div class="glass-panel rounded-xl p-5 flex items-center justify-between">' +
+                    '<div>' +
+                        '<span class="text-[9px] text-gold-dim/30 tracking-[0.15em] uppercase">Connected Devices</span>' +
+                        '<div class="mt-1">' +
+                            '<span class="text-lg font-bold text-gold">' + (d.used_ips != null ? d.used_ips + ' / ' + (d.max_ip_per_user || '∞') : '∞') + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="flex -space-x-2">' +
+                        '<div class="w-8 h-8 rounded-full glass-panel border border-gold/5 flex items-center justify-center"><span class="text-[10px] text-gold">1</span></div>' +
+                        '<div class="w-8 h-8 rounded-full glass-panel border border-gold/5 flex items-center justify-center"><span class="text-[10px] text-gold">2</span></div>' +
+                        '<div class="w-8 h-8 rounded-full glass-panel border border-gold/5 flex items-center justify-center"><span class="text-[10px] text-gold">3</span></div>' +
+                        '<div class="w-8 h-8 rounded-full glass-panel border border-gold/5 flex items-center justify-center"><span class="text-[10px] text-gold">+</span></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            // Row 3: Configs
+            '<div class="md:col-span-2 glass-panel rounded-xl p-5 fade-up fade-up-4">' +
+                '<div class="flex justify-between items-center mb-3">' +
+                    '<span class="text-[9px] text-gold-dim/30 tracking-[0.15em] uppercase">Configuration</span>' +
+                    '<div class="flex gap-1.5">' +
+                        '<button onclick="showQr()" class="btn-glass w-8 h-8"><span class="material-symbols-outlined text-base">qr_code_2</span></button>' +
+                        '<button onclick="copyAll()" class="btn-glass w-8 h-8"><span class="material-symbols-outlined text-base">content_copy</span></button>' +
+                        '<button onclick="copySub()" class="btn-glass w-8 h-8"><span class="material-symbols-outlined text-base">link</span></button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="flex flex-col gap-1.5 max-h-[120px] overflow-y-auto scroll-glass pr-1">' +
+                    buildConfigs(d) +
+                '</div>' +
+                '<div class="mt-3 flex gap-2">' +
+                    '<button onclick="importSub()" class="flex-1 py-2 rounded-lg text-[10px] font-bold tracking-[0.1em] uppercase transition-all btn-gold">Import Now</button>' +
+                '</div>' +
+            '</div>';
+
+        document.getElementById('app').innerHTML = html;
+    }
+
+    function buildConfigs(d) {
+        var cfgs = d.configs || (d.config ? [d.config] : []);
+        if (d.vless_link && !cfgs.length) cfgs = [d.vless_link];
+        if (!cfgs.length) return '<span class="text-[9px] text-gold-dim/25">No configs available</span>';
+        
+        var items = '';
+        cfgs.slice(0, 4).forEach(function(c, i) {
+            if (!c) return;
+            var type = 'VLESS';
+            try { var u = new URL(c); type = u.protocol.replace(':', '').toUpperCase(); } catch(e) {}
+            var short = c.length > 55 ? c.substring(0, 55) + '...' : c;
+            items += 
+                '<div class="metric-card flex justify-between items-center" onclick="copyCfg(' + i + ')">' +
+                    '<div class="flex items-center gap-2 min-w-0">' +
+                        '<span class="text-[9px] font-bold text-gold/35">#' + (i + 1) + '</span>' +
+                        '<span class="text-[8px] text-gold-dim/25 font-mono truncate" dir="ltr">' + short + '</span>' +
+                    '</div>' +
+                    '<span class="text-[8px] text-gold-dim/15">' + type + '</span>' +
+                '</div>';
+        });
+        if (cfgs.length > 4) {
+            items += '<span class="text-[8px] text-gold-dim/15 text-center">+' + (cfgs.length - 4) + ' more</span>';
+        }
+        return items;
+    }
+
+    // ── GLOBALS ──
+    var uname = window.location.pathname.split('/').filter(Boolean).pop() || '';
+    var subUrl = '';
+    var data = null;
+
+    window.copyCfg = function(i) {
+        var cfgs = data ? (data.configs || (data.config ? [data.config] : [])) : [];
+        if (data && data.vless_link && !cfgs.length) cfgs = [data.vless_link];
+        if (cfgs[i]) copyText(cfgs[i]);
+    };
+    window.copyAll = function() {
+        var cfgs = data ? (data.configs || (data.config ? [data.config] : [])) : [];
+        if (data && data.vless_link && !cfgs.length) cfgs = [data.vless_link];
+        if (cfgs.length) copyText(cfgs.join('\n'));
+    };
+    window.copySub = function() {
+        if (subUrl) copyText(subUrl);
+    };
+    window.importSub = function() {
+        if (subUrl) window.open('v2rayng://install-sub?url=' + encodeURIComponent(subUrl), '_blank');
+    };
+    window.showQr = function() {
+        var modal = document.getElementById('qrModal');
+        var img = document.getElementById('qrImg');
+        if (!modal || !img || !uname) return;
+        img.src = '/api/sub/' + encodeURIComponent(uname) + '/qr?t=' + Date.now();
+        modal.classList.add('show');
+    };
+
+    // ── LOAD ──
+    async function load() {
+        try {
+            var r = await fetch('/api/sub/' + encodeURIComponent(uname));
+            if (!r.ok) throw new Error('Not found');
+            data = await r.json();
+            if (data.config_uuid) subUrl = window.location.origin + '/sub/' + data.config_uuid;
+            render(data);
+        } catch(e) {
+            document.getElementById('app').innerHTML = 
+                '<div class="md:col-span-2 text-center py-12">' +
+                    '<span class="material-symbols-outlined text-4xl text-gold-dim/15">diamond</span>' +
+                    '<p class="mt-3 text-[10px] text-gold-dim/25 tracking-[0.15em]">' + e.message + '</p>' +
+                '</div>';
+        }
+    }
+
+    load();
+})();
+</script>
+</body>
+</html>
