@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="dark" dir="ltr" lang="fa">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Black Gold Luxury | Spider</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+    
+    <style>
+        /* ================================================================
+           BLACK GOLD LUXURY — مینیمال و لوکس
+           ================================================================ */
+
+        body {
+            background: #0a0a0a;
+            color: #e8e8e8;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ── پس‌زمینه ── */
+        .bg-luxury {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            background: 
+                radial-gradient(ellipse 800px 600px at 30% 20%, rgba(212, 175, 55, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 500px at 70% 80%, rgba(212, 175, 55, 0.04) 0%, transparent 50%),
+                #0a0a0a;
+        }
+
+        .gold-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 70%);
+            animation: gridDrift 40s linear infinite;
+        }
+        @keyframes gridDrift {
+            from { background-position: 0 0; }
+            to   { background-position: 60px 60px; }
+        }
+
+        /* ── پنل شیشه‌ای ── */
+        .glass-card {
+            background: rgba(10, 10, 12, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 6px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.03);
+        }
+
+        /* ── متن طلایی ── */
+        .text-gold { color: #d4af37; }
+        .text-gold-dim { color: rgba(212, 175, 55, 0.4); }
+        .text-gold-bright { color: #f0d080; }
+
+        /* ── دکمه‌ها ── */
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.08);
+            background: rgba(10, 10, 12, 0.5);
+            color: rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-icon:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* ── حلقه پیشرفت ── */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.6s cubic-bezier(.22,1,.36,1);
+        }
+
+        /* ── نقطه طلایی ── */
+        .gold-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4af37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ── کارت متریک ── */
+        .metric-card {
+            background: rgba(10, 10, 12, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.04);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            border-color: rgba(212, 175, 55, 0.08);
+            background: rgba(10, 10, 12, 0.6);
+        }
+
+        /* ── نوار پیشرفت ── */
+        .progress-bar {
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(212, 175, 55, 0.06);
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar__fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #d4af37, #f0d080);
+            transition: width 0.8s cubic-bezier(.22,1,.36,1);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+        }
+
+        /* ── انیمیشن ورود ── */
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .rise { animation: rise 0.5s cubic-bezier(.22,1,.36,1) both; }
+        .rise-1 { animation-delay: 0.05s; }
+        .rise-2 { animation-delay: 0.10s; }
+        .rise-3 { animation-delay: 0.15s; }
+        .rise-4 { animation-delay: 0.20s; }
+        .rise-5 { animation-delay: 0.25s; }
+
+        /* ── اسکرول ── */
+        .scroll-gold::-webkit-scrollbar { width: 3px; }
+        .scroll-gold::-webkit-scrollbar-track { background: rgba(212, 175, 55, 0.03); }
+        .scroll-gold::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.12); border-radius: 4px; }
+        .scroll-gold::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.2); }
+
+        /* ── مدال ── */
+        #qrModal.show { opacity: 1; pointer-events: auto; }
+        #qrModal { transition: opacity 0.3s ease; }
+        #toast.show { opacity: 1; }
+        #toast { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body>
+
+<!-- ====== BACKGROUND ====== -->
+<div class="bg-luxury"></div>
+<div class="gold-grid"></div>
+
+<!-- ====== MAIN ====== -->
+<main class="relative z-10 w-full max-w-4xl mx-auto px-4 py-6 min-h-screen flex flex-col">
+
+    <!-- ====== HEADER — فقط آیکون‌ها ====== -->
+    <header class="flex justify-end items-center gap-2 mb-6 rise rise-1">
+        <button onclick="toggleLang()" class="btn-icon" title="تغییر زبان">
+            <span class="material-symbols-outlined text-xl">translate</span>
+        </button>
+        <button onclick="toggleTheme()" class="btn-icon" title="تغییر تم">
+            <span class="material-symbols-outlined text-xl">dark_mode</span>
+        </button>
+    </header>
+
+    <!-- ====== CARDS ====== -->
+    <div id="app" class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <!-- Loading -->
+        <div class="md:col-span-2 flex items-center justify-center py-20">
+            <div class="text-center">
+                <div class="inline-block w-8 h-8 border-2 border-gold/20 border-t-gold rounded-full animate-spin"></div>
+                <p class="mt-3 text-xs text-gold-dim tracking-widest uppercase">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="mt-6 pt-4 border-t border-gold/5 text-center">
+        <span class="text-[10px] text-gold-dim/50 tracking-[0.15em]">✦ BLACK GOLD LUXURY ✦</span>
+    </footer>
+</main>
+
+<!-- ====== QR MODAL ====== -->
+<div id="qrModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none">
+    <div class="glass-card rounded-2xl p-6 max-w-xs w-full mx-4 text-center relative">
+        <button onclick="closeQr()" class="absolute top-2 right-2 text-gold-dim hover:text-gold transition-colors">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <h3 class="text-sm font-bold text-gold tracking-widest uppercase mb-4">✦ QR Code ✦</h3>
+        <img id="qrImg" class="mx-auto rounded-lg border border-gold/10 bg-black" alt="QR" style="max-width: 180px;"/>
+        <p class="mt-3 text-[10px] text-gold-dim tracking-widest">SCAN TO IMPORT</p>
+    </div>
+</div>
+
+<!-- ====== TOAST ====== -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-gold text-black text-xs font-bold z-50 opacity-0 pointer-events-none tracking-widest">
+    ✦ Copied ✦
+</div>
+
+<script>
+(function() {
+    // ── TOGGLE ──
+    window.toggleTheme = function() {
+        document.documentElement.classList.toggle('dark');
+    };
+    window.toggleLang = function() {
+        var html = document.documentElement;
+        html.lang = html.lang === 'fa' ? 'en' : 'fa';
+        html.dir = html.lang === 'fa' ? 'rtl' : 'ltr';
+    };
+    window.closeQr = function() {
+        document.getElementById('qrModal').classList.remove('show');
+    };
+
+    // ── TOAST ──
+    function toast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = '✦ ' + msg + ' ✦';
+        t.classList.add('show');
+        clearTimeout(t._timer);
+        t._timer = setTimeout(function() { t.classList.remove('show'); }, 1800);
+    }
+
+    // ── COPY ──
+    window.copyText = function(text) {
+        if (!text) return;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() { toast('Copied'); });
+        } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); toast('Copied'); } catch(e) {}
+            document.body.removeChild(ta);
+        }
+    };
+
+    // ── FORMAT ──
+    function fmtBytes(b) {
+        if (!b || b < 1) return '0 B';
+        var u = ['B', 'KB', 'MB', 'GB', 'TB'];
+        var i = 0;
+        while (b >= 1024 && i < u.length - 1) { b /= 1024; i++; }
+        return b.toFixed(i ? 1 : 0) + ' ' + u[i];
+    }
+
+    // ── RING COMPONENT ──
+    function createRing(value, max, label, color) {
+        var r = 32, c = 2 * Math.PI * r;
+        var pct = max > 0 ? Math.min(1, value / max) : 0;
+        var offset = c * (1 - pct);
+        var display = value === '∞' ? '∞' : String(value);
+        if (typeof value === 'number' && value > 999) display = (value/1000).toFixed(1) + 'K';
+        
+        return '<div class="flex flex-col items-center">' +
+            '<div class="relative w-16 h-16">' +
+                '<svg class="w-full h-full progress-ring" viewBox="0 0 72 72">' +
+                    '<circle cx="36" cy="36" fill="transparent" r="32" stroke="rgba(212,175,55,0.06)" stroke-width="4"></circle>' +
+                    '<circle class="progress-ring__circle" cx="36" cy="36" fill="transparent" r="32" stroke="' + color + '" stroke-width="4" stroke-dasharray="' + c.toFixed(2) + '" stroke-dashoffset="' + offset.toFixed(2) + '" stroke-linecap="round" style="filter:drop-shadow(0 0 6px ' + color + '33);"></circle>' +
+                '</svg>' +
+                '<div class="absolute inset-0 flex items-center justify-center">' +
+                    '<span class="text-sm font-bold text-gold">' + display + '</span>' +
+                '</div>' +
+            '</div>' +
+            '<span class="text-[9px] text-gold-dim/60 tracking-widest uppercase mt-1">' + label + '</span>' +
+        '</div>';
+    }
+
+    // ── PROGRESS BAR ──
+    function createProgress(value, max, label) {
+        var pct = max > 0 ? Math.min(100, value / max * 100) : 0;
+        return '<div class="flex-1">' +
+            '<div class="flex justify-between items-end mb-1">' +
+                '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">' + label + '</span>' +
+                '<span class="text-xs font-bold text-gold">' + fmtBytes(value) + ' / ' + (max > 0 ? fmtBytes(max) : '∞') + '</span>' +
+            '</div>' +
+            '<div class="progress-bar">' +
+                '<div class="progress-bar__fill" style="width:' + pct.toFixed(1) + '%;"></div>' +
+            '</div>' +
+        '</div>';
+    }
+
+    // ── RENDER ──
+    function render(d) {
+        var used = d.traffic_used_bytes || 0;
+        var limit = d.traffic_limit_bytes || 0;
+        var days = (d.expire_days === null || d.expire_days === undefined) ? '∞' : d.expire_days;
+        var isActive = d.is_active !== false && d.status === 'active';
+        var protocol = (d.protocol || 'VLESS').toUpperCase();
+
+        // Create the 4 metric cards
+        var cards = 
+            // Row 1: Time + Traffic
+            '<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 rise rise-2">' +
+                // Time Card
+                '<div class="glass-card rounded-xl p-5 flex items-center justify-between">' +
+                    '<div>' +
+                        '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">Time Left</span>' +
+                        '<div class="flex items-center gap-2 mt-1">' +
+                            '<span class="text-2xl font-bold text-gold">' + days + '</span>' +
+                            '<span class="text-xs text-gold-dim/40">days</span>' +
+                            '<span class="gold-dot ml-2"></span>' +
+                        '</div>' +
+                        '<span class="text-[10px] text-gold-dim/40 tracking-widest">' + (isActive ? '● ACTIVE' : '○ INACTIVE') + '</span>' +
+                    '</div>' +
+                    '<div>' + createRing(days === '∞' ? 30 : days, 30, '') + '</div>' +
+                '</div>' +
+                // Traffic Card
+                '<div class="glass-card rounded-xl p-5 flex flex-col justify-center">' +
+                    '<div class="flex items-center justify-between">' +
+                        '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">Traffic</span>' +
+                        '<span class="text-xs font-bold text-gold">' + (limit > 0 ? (used/limit*100).toFixed(1) : '∞') + '%</span>' +
+                    '</div>' +
+                    '<div class="mt-2">' + createProgress(used, limit, 'Used') + '</div>' +
+                '</div>' +
+            '</div>' +
+            // Row 2: Protocol + Devices
+            '<div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 rise rise-3">' +
+                // Protocol Card
+                '<div class="glass-card rounded-xl p-5 flex items-center justify-between">' +
+                    '<div>' +
+                        '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">Protocol</span>' +
+                        '<div class="mt-1">' +
+                            '<span class="text-lg font-bold text-gold">' + protocol + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="w-10 h-10 rounded-full glass-card flex items-center justify-center border-gold/10">' +
+                        '<span class="material-symbols-outlined text-gold text-2xl">bolt</span>' +
+                    '</div>' +
+                '</div>' +
+                // Devices Card
+                '<div class="glass-card rounded-xl p-5 flex items-center justify-between">' +
+                    '<div>' +
+                        '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">Devices</span>' +
+                        '<div class="mt-1">' +
+                            '<span class="text-lg font-bold text-gold">' + (d.used_ips != null ? d.used_ips + ' / ' + (d.max_ip_per_user || '∞') : '∞') + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="flex -space-x-2">' +
+                        '<div class="w-7 h-7 rounded-full glass-card border border-gold/10 flex items-center justify-center"><span class="text-[10px] text-gold">1</span></div>' +
+                        '<div class="w-7 h-7 rounded-full glass-card border border-gold/10 flex items-center justify-center"><span class="text-[10px] text-gold">2</span></div>' +
+                        '<div class="w-7 h-7 rounded-full glass-card border border-gold/10 flex items-center justify-center"><span class="text-[10px] text-gold">+</span></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            // Row 3: Config + Actions (rest of the content)
+            '<div class="md:col-span-2 glass-card rounded-xl p-5 rise rise-4">' +
+                '<div class="flex justify-between items-center mb-4">' +
+                    '<span class="text-[10px] text-gold-dim/60 tracking-widest uppercase">Configuration</span>' +
+                    '<div class="flex gap-2">' +
+                        '<button onclick="showQr()" class="btn-icon w-8 h-8"><span class="material-symbols-outlined text-base">qr_code_2</span></button>' +
+                        '<button onclick="copyAll()" class="btn-icon w-8 h-8"><span class="material-symbols-outlined text-base">content_copy</span></button>' +
+                        '<button onclick="copySub()" class="btn-icon w-8 h-8"><span class="material-symbols-outlined text-base">link</span></button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="flex flex-col gap-2 max-h-[140px] overflow-y-auto scroll-gold pr-1">' +
+                    buildConfigItems(d) +
+                '</div>' +
+                '<div class="mt-3 flex gap-2">' +
+                    '<button onclick="importSub()" class="flex-1 py-2 rounded-lg bg-gold text-black text-[10px] font-bold tracking-widest uppercase hover:opacity-90 transition-all">Import Now</button>' +
+                '</div>' +
+            '</div>';
+
+        var app = document.getElementById('app');
+        app.innerHTML = cards;
+    }
+
+    function buildConfigItems(d) {
+        var cfgs = d.configs || (d.config ? [d.config] : []);
+        if (d.vless_link && !cfgs.length) cfgs = [d.vless_link];
+        if (!cfgs.length) return '<span class="text-[10px] text-gold-dim/40">No configs available</span>';
+        
+        var items = '';
+        cfgs.slice(0, 3).forEach(function(c, i) {
+            if (!c) return;
+            var type = 'VLESS';
+            try { var u = new URL(c); type = u.protocol.replace(':', '').toUpperCase(); } catch(e) {}
+            var short = c.length > 60 ? c.substring(0, 60) + '...' : c;
+            items += 
+                '<div class="metric-card flex justify-between items-center cursor-pointer" onclick="copyCfg(' + i + ')">' +
+                    '<div class="flex items-center gap-3 min-w-0">' +
+                        '<span class="text-[10px] font-bold text-gold/60">#' + (i + 1) + '</span>' +
+                        '<span class="text-[9px] text-gold-dim/40 font-mono truncate" dir="ltr">' + short + '</span>' +
+                    '</div>' +
+                    '<span class="text-[9px] text-gold-dim/30">' + type + '</span>' +
+                '</div>';
+        });
+        if (cfgs.length > 3) {
+            items += '<span class="text-[9px] text-gold-dim/30 text-center">+' + (cfgs.length - 3) + ' more</span>';
+        }
+        return items;
+    }
+
+    // ── GLOBALS ──
+    var uname = window.location.pathname.split('/').filter(Boolean).pop() || '';
+    var subUrl = '';
+    var data = null;
+
+    window.copyCfg = function(i) {
+        var cfgs = data ? (data.configs || (data.config ? [data.config] : [])) : [];
+        if (data && data.vless_link && !cfgs.length) cfgs = [data.vless_link];
+        if (cfgs[i]) copyText(cfgs[i]);
+    };
+    window.copyAll = function() {
+        var cfgs = data ? (data.configs || (data.config ? [data.config] : [])) : [];
+        if (data && data.vless_link && !cfgs.length) cfgs = [data.vless_link];
+        if (cfgs.length) copyText(cfgs.join('\n'));
+    };
+    window.copySub = function() {
+        if (subUrl) copyText(subUrl);
+    };
+    window.importSub = function() {
+        if (subUrl) window.open('v2rayng://install-sub?url=' + encodeURIComponent(subUrl), '_blank');
+    };
+    window.showQr = function() {
+        var modal = document.getElementById('qrModal');
+        var img = document.getElementById('qrImg');
+        if (!modal || !img || !uname) return;
+        img.src = '/api/sub/' + encodeURIComponent(uname) + '/qr?t=' + Date.now();
+        modal.classList.add('show');
+    };
+
+    // ── LOAD ──
+    async function load() {
+        try {
+            var r = await fetch('/api/sub/' + encodeURIComponent(uname));
+            if (!r.ok) throw new Error('Not found');
+            data = await r.json();
+            if (data.config_uuid) subUrl = window.location.origin + '/sub/' + data.config_uuid;
+            render(data);
+        } catch(e) {
+            var app = document.getElementById('app');
+            app.innerHTML = 
+                '<div class="md:col-span-2 text-center py-16">' +
+                    '<span class="material-symbols-outlined text-4xl text-gold-dim/30">diamond</span>' +
+                    '<p class="mt-3 text-xs text-gold-dim/40 tracking-widest">' + e.message + '</p>' +
+                '</div>';
+        }
+    }
+
+    load();
+})();
+</script>
+</body>
+</html>
